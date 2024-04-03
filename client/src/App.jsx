@@ -8,13 +8,14 @@ import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import Dashborad from './pages/Dashborad'
 import Projects from './pages/Projects'
+import Header from './componets/Header'
 
 
 
 export default function App() {
   return (
     <BrowserRouter>
-      
+      <Header/>
    <Routes>
 
        <Route path='/'  element={<Home/>}/>
