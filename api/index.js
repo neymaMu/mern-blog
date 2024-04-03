@@ -1,6 +1,9 @@
 import express from 'express' 
 import mongoose from "mongoose"
 import dotenv from 'dotenv'
+import userRoute from './routes/user.js'
+
+
 
 dotenv.config()
 
@@ -15,4 +18,6 @@ mongoose.connect(process.env.MONG_DB)
 
 app.listen(5000,()=>{
     console.log("Server is ruing")
-})
+}) 
+
+app.use("/api/user",userRoute)
