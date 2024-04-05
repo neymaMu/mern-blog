@@ -9,6 +9,9 @@ import SignUp from './pages/SignUp'
 import Dashborad from './pages/Dashborad'
 import Projects from './pages/Projects'
 import Header from './componets/Header'
+import Footer from './componets/Footer'
+
+
 
 
 
@@ -35,7 +38,7 @@ export default function App() {
    </Routes>
    
    
-   
+ <Footer/>
    
     </BrowserRouter>
   )
