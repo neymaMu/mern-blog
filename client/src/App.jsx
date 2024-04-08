@@ -10,6 +10,7 @@ import Dashborad from './pages/Dashborad'
 import Projects from './pages/Projects'
 import Header from './componets/Header'
 import Footer from './componets/Footer'
+import PrivateRoute from './componets/PrivateRoute'
 
 
 
@@ -28,9 +29,12 @@ export default function App() {
        <Route path='/signin'  element={<SignIn/>}/>
         
        <Route path='/signup'  element={<SignUp/>}/> 
-
+       
+       <Route element={<PrivateRoute/>}>
        <Route path="/dashbord" element={<Dashborad/>} />
 
+      </Route>
+      
        <Route path="/projects" element={<Projects/>} />
   
   
