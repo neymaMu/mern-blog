@@ -4,8 +4,13 @@ import{persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import persistStore from 'redux-persist/es/persistStore'
 
+import themereducer from './theme/themeSlice'
+
+
+
 const rootReducer = combineReducers({
-  user:userReducer
+  user:userReducer,
+  theme:themereducer
 })
 
 

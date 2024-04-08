@@ -5,6 +5,10 @@ import flag from '../assets/flag.jpg'
 import { IoSearchOutline } from "react-icons/io5";
 import { IoMoonOutline } from "react-icons/io5";
 import{useSelector } from 'react-redux'
+import {  useDispatch} from 'react-redux'
+import { toggleTheme } from '../redux/theme/themeSlice';
+import { ImSun } from "react-icons/im";
+
 
 
 export default function Header() {
@@ -12,7 +16,11 @@ export default function Header() {
  const path = useLocation().pathname
    
   const{currentUser} = useSelector(state => state.user)
- 
+   
+  const{theme} = useSelector(state => state.theme)
+  
+  
+  const dispatch = useDispatch()
  
  return (
     
@@ -50,9 +58,12 @@ export default function Header() {
    
    <div className='flex gap-2 md:order-2'>
 
-  <Button className='w-12 h-10 lg:hidden' color="gray" pill>
+  <Button className='w-12 h-10 hidden sm:inline' color="gray" pill onClick={() => dispatch(toggleTheme())}>
  
-  <IoMoonOutline />
+  {theme === 'light'? <ImSun /> :   <IoMoonOutline />}
+  
+  
+
   
   </Button>
  
