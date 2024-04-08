@@ -5,6 +5,7 @@ import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react'
 import { signInStart,signInSuccess,signInFailure } from '../redux/user/userSlice'
 
 import {  useDispatch,useSelector } from 'react-redux'
+import OAuth from '../componets/OAuth'
 
 
 
@@ -143,6 +144,10 @@ export default function SignIn() {
  
   
   </Button>
+  
+  
+  <OAuth/>
+  
   
    </form>
   

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import gym from '../assets/gym.jpg'
 import { Link,useNavigate } from 'react-router-dom'
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react'
+import OAuth from '../componets/OAuth'
 
 
 
@@ -148,6 +149,10 @@ export default function SignUp() {
   
   </Button>
   
+   
+   <OAuth/>
+   
+   
    </form>
   
   
