@@ -4,13 +4,14 @@ import dotenv from 'dotenv'
 import userRoute from './routes/user.js'
 import authRoute from './routes/auth.js'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 
 dotenv.config()
 
 const app = express() 
 app.use(express.json())
 app.use(cors())
-
+app.use(cookieParser())
 
 mongoose.connect(process.env.MONG_DB)
 .then(() => console.log("Db Connected"))

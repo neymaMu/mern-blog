@@ -1,9 +1,15 @@
 import expres from 'express' 
-import { text } from '../controlers/user.js'
+import { verifyToken } from '../utils/verifyUser.js'
+import { updateUser } from '../controlers/user.js'
+
+
+
 const router = expres.Router() 
 
 
-router.get("/test",text) 
+
+
+router.put("/update/:userId",verifyToken,updateUser)
 
 
 export default router
