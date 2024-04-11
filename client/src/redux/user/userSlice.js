@@ -45,16 +45,30 @@ import { createSlice } from '@reduxjs/toolkit'
         updateFalier:(state,action) =>{
             state.loading = false;
             state.error = action.payload
-        }
+        },
 
-     
+        deletUserStart:(state)=>{
+            state.loading=true;
+            state.error=null
+        },
+
+        deleteSuccess:(state)=>{
+            state.currentUser = null;
+            state.loading = false;
+            state.error = null
+
+        },
+       deleteFalier:(state,action) =>{
+            state.loading = false;
+            state.error = action.payload
+        },
    
     }
 
   })  
 
 
-export const{signInStart,signInSuccess,signInFailure,updateStart,updateSuccess,updateFalier} = userSlice.actions
+export const{ deletUserStart, deleteSuccess, deleteFalier,signInStart,signInSuccess,signInFailure,updateStart,updateSuccess,updateFalier} = userSlice.actions
 
 export default userSlice.reducer
 

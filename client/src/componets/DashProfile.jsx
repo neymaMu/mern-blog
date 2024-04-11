@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
 import{useSelector } from 'react-redux'
-import{Alert, Button, TextInput} from 'flowbite-react'
+import{Alert, Button, Modal, TextInput} from 'flowbite-react'
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
 import{app} from '../firbase'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { updateStart,updateSuccess,updateFalier } from '../redux/user/userSlice'
+import { updateStart,updateSuccess,updateFalier, deleteFalier,deleteSuccess,deletUserStart } from '../redux/user/userSlice'
 import{useDispatch} from 'react-redux'
- 
+import { FaCircleExclamation } from "react-icons/fa6";
 
 export default function DashProfile() {
  
  
-    const{currentUser} = useSelector((state) => state.user)
+    const{currentUser,error} = useSelector((state) => state.user)
  
  
     const[imageFile,setImageFile] = useState(null)
@@ -28,6 +28,10 @@ export default function DashProfile() {
     
     
     const[formData, setFormData] = useState({})
+    
+    const[showmodel,setShowmodel] = useState(false)
+   
+   
    
    
     const dispatch = useDispatch()
@@ -159,7 +163,35 @@ const handleChange = (e) =>{
    
    
    
-      return (
+     const handleDeletUser = async() =>{
+     setShowmodel(false)
+
+     try{
+     dispatch(deletUserStart())
+     
+     const res = await fetch(`http://localhost:5000/api/user/delete/${currentUser._id}`,{
+      method:"DELETE",
+      credentials: 'include',
+     })
+      const data =await res.json() 
+      if(!res.ok){
+      dispatch( deleteFalier(error.message))
+      }
+    else{
+      dispatch(deleteSuccess(data))
+    }
+    }
+     catch(error){
+      dispatch( deleteFalier(error.message))
+     }
+    
+    
+    }
+
+
+
+
+   return (
     <div className='  max-w-lg mx-auto w-full  p-6 cursor-pinter'>
       
       <h1 className='my-7 text-center font-semibold text-3xl md:w-full  md:ml-60'>Profile</h1>
@@ -216,7 +248,7 @@ const handleChange = (e) =>{
    
    
    {updateUserError && <Alert >{updateUserError}</Alert>}
-       
+   {error && <Alert >{error}</Alert>}  
        
        
         <TextInput className='w-80' id="username" type="text" placeholder='username' defaultValue={currentUser.username} onChange={handleChange}/>
@@ -231,24 +263,63 @@ const handleChange = (e) =>{
          <Button type="submit" gradientDuoTone='purpleToBlue' outline>update</Button>
          
          <div className='flex justify-between text-red-500 mt-4'>
-                <span className='font-bold'>Delete Account</span>
+               
+                <span onClick={() => setShowmodel(true)} className='font-bold cursor-pointer'>Delete Account</span>
+              
                 <span className='font-bold'>Sign Out</span>
              </div>
          
          </form>
       
       
+        </div>
+
+
+   
+   
+      <Modal show={showmodel} 
       
+      onClose={() => setShowmodel(false)}
+      popup
+      size="md"
+      
+      >
+
+
+       <Modal.Header/> 
+
+       <Modal.Body>
+
+      <div className='text-center'>
+      <FaCircleExclamation  className='h-14 w-14 text-gray-500 dark:text-gray-200 mb-4 mx-auto'/>
+      <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>Are you sure you want to delete your account</h3>
+      
+        
+        <div className='flex justify-center gap-4'>
+          <Button color="failure" onClick={handleDeletUser}>
+            Yes Am Sure
+          </Button>
        
+       
+         <Button color="gray" onClick={() => setShowmodel(false)}>No ,Cancel</Button>
+         </div>
+        
+        
+         </div>
+
+
+
+       </Modal.Body>
+       
+       
+       
+        </Modal>
+   
+      
+      
+      
       
       
       </div>
-
-
-   
-   
-  
-   
-    </div>
   )
 }
