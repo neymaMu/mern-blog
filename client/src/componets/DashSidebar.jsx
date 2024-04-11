@@ -3,13 +3,16 @@ import { HiUser,HiArrowRight  } from "react-icons/hi";
 import React, { useEffect, useState } from 'react'
 import{Link, useLocation} from 'react-router-dom'
 
+import { signoutSuccses } from '../redux/user/userSlice'
+import {  useDispatch} from 'react-redux'
 
 
 export default function DashSidebar() {
  
    
+  const dispatch = useDispatch()
    
-    const location = useLocation()
+  const location = useLocation()
  
  const[tab, setTab] = useState("")
  
@@ -29,9 +32,40 @@ export default function DashSidebar() {
    
    
    
+  const handlesignout =async () =>{
+
+    try{
+   const res = await fetch('http://localhost:5000/api/user/signout',{
+    method:"POST"
+   })
+
+    const data = await res.json()
+
+    if(!res.ok){
+      console.log(data.message)
+    }
+  
+  else{
+   dispatch(signoutSuccses())
+  }
+     
+  
+  }
+    catch(error){
+      console.log(error)
+    }
+    }
    
    
-    return (
+  
+  
+  
+  
+  
+  
+  
+  
+  return (
   
    <Sidebar  className='w-full md:w-56'>
 
@@ -50,7 +84,7 @@ export default function DashSidebar() {
    
    
    
-    <Sidebar.Item  icon={HiArrowRight} className="cursor-pointer">
+    <Sidebar.Item onClick={handlesignout}  icon={HiArrowRight} className="cursor-pointer">
        Sign Out
         
     </Sidebar.Item>

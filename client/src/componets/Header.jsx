@@ -8,7 +8,7 @@ import{useSelector } from 'react-redux'
 import {  useDispatch} from 'react-redux'
 import { toggleTheme } from '../redux/theme/themeSlice';
 import { ImSun } from "react-icons/im";
-
+import { signoutSuccses } from '../redux/user/userSlice'
 
 
 export default function Header() {
@@ -22,7 +22,41 @@ export default function Header() {
   
   const dispatch = useDispatch()
  
- return (
+ 
+ 
+  const handlesignout =async () =>{
+
+    try{
+   const res = await fetch('http://localhost:5000/api/user/signout',{
+    method:"POST"
+   })
+
+    const data = await res.json()
+
+    if(!res.ok){
+      console.log(data.message)
+    }
+  
+  else{
+   dispatch(signoutSuccses())
+  }
+     
+  
+  }
+    catch(error){
+      console.log(error)
+    }
+    }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  return (
     
     <Navbar className='border-b-2 '>
     
@@ -85,7 +119,7 @@ export default function Header() {
  
     <Dropdown.Divider/> 
 
-    <Dropdown.Item>Sign Out</Dropdown.Item>
+    <Dropdown.Item onClick={handlesignout}>Sign Out</Dropdown.Item>
  
  
  

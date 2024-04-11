@@ -71,7 +71,18 @@ res.status(200).json("user delted")
 catch(error){
   next(error)
 }
+} 
 
 
+//sign out 
 
+export const signout = (req,res,next) =>{
+
+  try{
+
+    res.clearCookie('access_token').status(200).json("User is sign out")
+  }
+  catch(error){
+    next(error)
+  }
 }

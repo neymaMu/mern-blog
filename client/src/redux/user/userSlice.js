@@ -62,13 +62,19 @@ import { createSlice } from '@reduxjs/toolkit'
             state.loading = false;
             state.error = action.payload
         },
+
+        signoutSuccses:(state) =>{
+            state.currentUser = null;
+            state.error = null;
+            state.loading=false
+        }
    
     }
 
   })  
 
 
-export const{ deletUserStart, deleteSuccess, deleteFalier,signInStart,signInSuccess,signInFailure,updateStart,updateSuccess,updateFalier} = userSlice.actions
+export const{signoutSuccses,deletUserStart, deleteSuccess, deleteFalier,signInStart,signInSuccess,signInFailure,updateStart,updateSuccess,updateFalier} = userSlice.actions
 
 export default userSlice.reducer
 

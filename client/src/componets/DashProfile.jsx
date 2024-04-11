@@ -5,7 +5,7 @@ import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/st
 import{app} from '../firbase'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { updateStart,updateSuccess,updateFalier, deleteFalier,deleteSuccess,deletUserStart } from '../redux/user/userSlice'
+import { updateStart,updateSuccess,updateFalier, deleteFalier,deleteSuccess,deletUserStart,signoutSuccses } from '../redux/user/userSlice'
 import{useDispatch} from 'react-redux'
 import { FaCircleExclamation } from "react-icons/fa6";
 
@@ -185,13 +185,43 @@ const handleChange = (e) =>{
       dispatch( deleteFalier(error.message))
      }
     
-    
     }
 
 
+  
+    const handlesignout =async () =>{
 
+    try{
+   const res = await fetch('http://localhost:5000/api/user/signout',{
+    method:"POST"
+   })
 
-   return (
+    const data = await res.json()
+
+    if(!res.ok){
+      console.log(data.message)
+    }
+  
+  else{
+   dispatch(signoutSuccses())
+  }
+     
+  
+  }
+    catch(error){
+      console.log(error)
+    }
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    return (
     <div className='  max-w-lg mx-auto w-full  p-6 cursor-pinter'>
       
       <h1 className='my-7 text-center font-semibold text-3xl md:w-full  md:ml-60'>Profile</h1>
@@ -266,7 +296,7 @@ const handleChange = (e) =>{
                
                 <span onClick={() => setShowmodel(true)} className='font-bold cursor-pointer'>Delete Account</span>
               
-                <span className='font-bold'>Sign Out</span>
+                <span onClick={handlesignout} className='font-bold'>Sign Out</span>
              </div>
          
          </form>
