@@ -48,7 +48,9 @@ export default function SignIn() {
      dispatch(signInStart())
    const res = await fetch("http://localhost:5000/api/auth/signIn",{
    method:"POST",
+   credentials: 'include',
    headers:{"Content-Type":"application/json"},
+
    body:JSON.stringify(formData)
 
    });
@@ -175,4 +177,6 @@ export default function SignIn() {
     </div>
   )
 }
+
+
 

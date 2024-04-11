@@ -5,22 +5,32 @@ import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/st
 import{app} from '../firbase'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-
+import { updateStart,updateSuccess,updateFalier } from '../redux/user/userSlice'
+import{useDispatch} from 'react-redux'
+ 
 
 export default function DashProfile() {
  
  
-    const{currentUser} = useSelector(state => state.user)
+    const{currentUser} = useSelector((state) => state.user)
  
  
     const[imageFile,setImageFile] = useState(null)
     const[imageUrl,setImageUrl] = useState(null)
     const[imageProgress,setImageProgress] = useState(null)
     const[imageError,setImageError] = useState(null)
-  
-   
-    console.log(imageError,imageProgress)
     
+    const[imageuploding,setImageuploding] = useState(false)
+
+    const[updateUsersuccses,setUpdateUsersuccses] = useState(false)
+    
+    const[updateUserError, setUpdateUserError] = useState(null)
+    
+    
+    const[formData, setFormData] = useState({})
+   
+   
+    const dispatch = useDispatch()
     
     
     const filePickerRef = useRef()
@@ -49,6 +59,7 @@ export default function DashProfile() {
     
     const  uploadimage = async() =>{
       setImageError(null)
+      setImageuploding(true)
       const storage = getStorage(app)
       const filename = new Date().getTime() + imageFile.name;
       const storageRef = ref(storage, filename)
@@ -68,11 +79,14 @@ export default function DashProfile() {
        
        setImageFile(null)
        setImageUrl(null)
+       setImageuploding(false)
        
         },
 
        () => {
          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => { setImageFile(downloadURL)
+          setFormData({ ...formData, profilePicture:downloadURL})
+          setImageuploding(false)
          })
        }
    )
@@ -81,16 +95,71 @@ export default function DashProfile() {
    
    
    
+const handleChange = (e) =>{
 
+ setFormData({ ...formData,[e.target.id]: e.target.value})
+
+}
    
-  
+
     
+   const handleSubmit =async (e) =>{
+    e.preventDefault();
+     
+  
+  
+  setUpdateUserError(null)
+  setUpdateUsersuccses(null)
+  
+    if(Object.keys(formData).length === 0){
+     
+     setUpdateUserError('no changes made')
+      return
+     }
+
+  if(imageuploding){
+    setUpdateUserError('please wait the file to update')
+    return
+  }
+    try{
+     dispatch(updateStart())
+     const res = await fetch(`http://localhost:5000/api/user/update/${currentUser._id}`,{
+    
+     method:"PUT",
+     credentials: 'include',
+     headers:{
+      'Content-Type': 'application/json',
+     },
+     body:JSON.stringify(formData)
+    
+     })
+    
+      const data = await res.json()
+      
+        if(!res.ok){
+        dispatch(updateFalier(data.message))
+        setUpdateUserError(data.message)
+      }
+      
+      else{
+        dispatch(updateSuccess(data))
+        setUpdateUsersuccses('User updated succssfully')
+
+      }
+    
+    }
+    catch(error){
+     dispatch(updateFalier(error.message))
+     setUpdateUserError(false)
+    }
+  
+ 
+}
    
    
    
    
-   
-   return (
+      return (
     <div className='  max-w-lg mx-auto w-full  p-6 cursor-pinter'>
       
       <h1 className='my-7 text-center font-semibold text-3xl md:w-full  md:ml-60'>Profile</h1>
@@ -98,10 +167,10 @@ export default function DashProfile() {
        <div className='flex w-full mx-auto'>
       
        
-         <form className='flex flex-col md:ml-80 gap-3 '>
+         <form onSubmit={handleSubmit} className='flex flex-col md:ml-80 gap-3 '>
          
        
-       <input hidden type="file"    onChange={handleimagechange} ref={filePickerRef}/>
+       <input hidden type="file"   onChange={handleimagechange} ref={filePickerRef}/>
        
        
        
@@ -143,11 +212,18 @@ export default function DashProfile() {
          {imageError && <Alert>{imageError}</Alert>}
         
         
-        <TextInput className='w-80' id="username" type="text" placeholder='username' defaultValue={currentUser.name}/>
+         {updateUsersuccses&& <Alert >{updateUsersuccses}</Alert>}
+   
+   
+   {updateUserError && <Alert >{updateUserError}</Alert>}
        
-        <TextInput className='w-90' id="email" type="email" placeholder='email' defaultValue={currentUser.email}/>
+       
+       
+        <TextInput className='w-80' id="username" type="text" placeholder='username' defaultValue={currentUser.username} onChange={handleChange}/>
+       
+        <TextInput className='w-90' id="email" type="email" placeholder='email' defaultValue={currentUser.email} onChange={handleChange}/>
          
-        <TextInput className='w-80' id="passowrd" type="password" placeholder='password' defaultValue={currentUser.password}/>
+        <TextInput className='w-80' id="passowrd" type="password" placeholder='password' onChange={handleChange} />
         
         
         
@@ -160,15 +236,18 @@ export default function DashProfile() {
              </div>
          
          </form>
+      
+      
+      
+       
+      
+      
       </div>
 
 
    
    
-   
-   
-   
-   
+  
    
     </div>
   )

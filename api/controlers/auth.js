@@ -56,7 +56,7 @@ export const Signup = async(req,res,next) =>{
    const validPassword = bcryptjs.compareSync(password,validUser.password)
     
    if(!validPassword){
-    next(errorHandler(400,"password invalid"))
+   return  next(errorHandler(400,"password invalid"))
    }
   
    
@@ -64,7 +64,7 @@ export const Signup = async(req,res,next) =>{
   
   const{password:pass, ...rest} = validUser._doc
  
-  res.status(200).cookie("token",token,{httpOnly:true}).json(rest)
+  res.status(200).cookie("access_token",token,{httpOnly:true}).json(rest)
   
   
  
@@ -88,7 +88,7 @@ if(user){
   const token = jwt.sign({id:user._id},process.env.JWT_SECRET)
   const{password, ...rest} = user._doc 
 
-  res.status(200).cookie("token",token,{
+  res.status(200).cookie("access_token",token,{
     httpOnly:true
   }).json(rest)
  
@@ -108,7 +108,7 @@ await NewUser.save()
 
 const token = jwt.sign({id:NewUser._id},process.env.JWT_SECRET)
 const{password, ... rest} = NewUser._doc 
-res.status(200).cookie("token",token,{httpOnly:true}).json(rest)
+res.status(200).cookie("access_token",token,{httpOnly:true}).json(rest)
 
 }
  
