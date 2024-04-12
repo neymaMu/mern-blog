@@ -69,7 +69,7 @@ export default function DashProfile() {
       setImageError(null)
       setImageuploding(true)
       const storage = getStorage(app)
-      const filename = new Date().getTime() + imageFile.name;
+      const filename = new Date().getTime() +  imageFile.name;
       const storageRef = ref(storage, filename)
       const uploadTask = uploadBytesResumable(storageRef, imageFile)
       
@@ -279,7 +279,7 @@ const handleChange = (e) =>{
    {updateUserError && <Alert >{updateUserError}</Alert>}
    {error && <Alert >{error}</Alert>}  
        
-       
+   
         <TextInput className='w-80' id="username" type="text" placeholder='username' defaultValue={currentUser.username} onChange={handleChange}/>
        
         <TextInput className='w-90' id="email" type="email" placeholder='email' defaultValue={currentUser.email} onChange={handleChange}/>

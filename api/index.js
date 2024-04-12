@@ -5,6 +5,8 @@ import userRoute from './routes/user.js'
 import authRoute from './routes/auth.js'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import postRoute from './routes/post.js'
+ 
 
 dotenv.config()
 
@@ -28,6 +30,7 @@ app.listen(5000,()=>{
 
 app.use("/api/user",userRoute)
 app.use("/api/auth",authRoute)
+app.use("/api/post",postRoute)
 
 
 
