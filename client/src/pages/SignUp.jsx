@@ -51,7 +51,7 @@ export default function SignUp() {
           
           
             setLoading(false)
-            setErrorMessage(false)
+            setErrorMessage(true)
    
            if(res.ok){
             navigate("/signin")
@@ -59,7 +59,7 @@ export default function SignUp() {
    
    
           }catch(error){
-   setErrorMessage(error.message)
+ 
     setLoading(false)
     setErrorMessage(false)
    
@@ -109,7 +109,7 @@ export default function SignUp() {
 
    
    {
-    errorMessage && <Alert className='flex items-center justify-center ' color="failure">{errorMessage}</Alert>
+    errorMessage ? <Alert className='flex items-center justify-center ' color="failure">{errorMessage}</Alert>:null
   }
   
    

@@ -20,6 +20,12 @@ const UserSchema = new mongoose.Schema({
     default:"https://www.shutterstock.com/image-vector/man-icon-vector-260nw-1040084344.jpg"
 
    },
+
+
+   isAdmin:{
+    type:Boolean,
+    default:false
+   },
   
    password:{
     type:String,

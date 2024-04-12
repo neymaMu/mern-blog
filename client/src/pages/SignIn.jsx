@@ -71,7 +71,8 @@ export default function SignIn() {
 
 
        }catch(error){
-      dispatch(signInFailure(error.message))
+      dispatch(signInFailure(error))
+
 
 }
 }
