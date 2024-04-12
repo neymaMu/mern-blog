@@ -6,6 +6,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/
 import { app } from '../firbase';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import{useNavigate} from 'react-router-dom'
 
 
      
@@ -21,9 +22,10 @@ import 'react-circular-progressbar/dist/styles.css';
     const[imageError,setImageError] = useState(null)
     
     const[formData,setFormData] = useState({})
-   
-   
-   
+     
+    const[publisherror,setPublisherror] = useState(false)
+
+    const navivgate = useNavigate()
    
     const handleuploadimage = async() =>{
 
@@ -70,20 +72,71 @@ import 'react-circular-progressbar/dist/styles.css';
     
     
     
-    return (
+     const handleSubmit = async(e) =>{
+    
+       e.preventDefault() 
+
+
+       try{
+         const res = await fetch("http://localhost:5000/api/post/create",{
+
+          method:"POST",
+          credentials: 'include',
+          headers:{
+            "Content-Type" : "application/json"
+          },
+
+          body:JSON.stringify(formData)
+          })
+
+          const data = await res.json()
+
+            if(!res.ok){
+              setPublisherror(data.message)
+              return
+            } 
+            if(res.ok){
+              setPublisherror(null)
+              navivgate(`/post/${data.slug}`)
+            }
+
+        }
+       catch(error){
+
+      setPublisherror("somthing went wrong")
+      
+      }
+}
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     return (
     
     
     <div className='p-3  max-w-3xl  mx-auto min-h-screen'>
        
         <h1 className='text-center text-2xl font-extrabold'>Create a Post</h1>
 
-        <form className='flex my-2  flex-col gap-3'>
+        <form className='flex my-2  flex-col gap-3' onSubmit={handleSubmit}>
            
            <div className='flex flex-col gap-4 sm:flex-row justify-between'>
 
-            <TextInput type="text" placeholder='Title' required id="title" className='flex-1'/>
+            <TextInput type="text" placeholder='Title' required id="title" className='flex-1'
+            
+            onChange={(e) => setFormData({ ...formData,title:e.target.value})}
+            
+            />
 
-             <Select>
+            
+             <Select onChange={(e) => setFormData({ ...formData,category:e.target.value})}>
+
+              
              <option value='uncategorized'> Select a category</option>
 
              <option value='fullBody'> full Body</option>
@@ -124,7 +177,11 @@ import 'react-circular-progressbar/dist/styles.css';
            {formData.image && <img src={formData.image} alt='upload' className='w-full h-72 object-cover'/> }
            
            
-           <ReactQuill required placeholder='Write Somthing' className='h-72 mb-12'/>
+           <ReactQuill required placeholder='Write Somthing' className='h-72 mb-12' 
+             
+             onChange={(value) => {setFormData({ ...formData,content:value})}}
+           
+           />
            
            
            <Button type="submit" gradientDuoTone="purpleToPink">Publish
@@ -133,6 +190,10 @@ import 'react-circular-progressbar/dist/styles.css';
            
            </Button>
            
+            
+            {publisherror && <Alert color="failure">{publisherror}</Alert>}
+            
+            
             </form>
        
        
