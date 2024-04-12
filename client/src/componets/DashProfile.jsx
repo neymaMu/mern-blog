@@ -8,11 +8,15 @@ import 'react-circular-progressbar/dist/styles.css';
 import { updateStart,updateSuccess,updateFalier, deleteFalier,deleteSuccess,deletUserStart,signoutSuccses } from '../redux/user/userSlice'
 import{useDispatch} from 'react-redux'
 import { FaCircleExclamation } from "react-icons/fa6";
+import{Link} from 'react-router-dom'
+ 
+
+
 
 export default function DashProfile() {
  
  
-    const{currentUser,error} = useSelector((state) => state.user)
+    const{currentUser,error,loading} = useSelector((state) => state.user)
  
  
     const[imageFile,setImageFile] = useState(null)
@@ -236,7 +240,7 @@ const handleChange = (e) =>{
        
        
        
-         <div  onClick={() => filePickerRef.current.click()} className='w-25 h-25 relative  self-center cursor-pointer  shadow-md overflow-hidden rounded-full'>
+         <div  onClick={() => filePickerRef.current.click()} className='w-20 h-20 relative  self-center cursor-pointer  shadow-md overflow-hidden rounded-full'>
        
     
        
@@ -262,12 +266,7 @@ const handleChange = (e) =>{
              />}
         
         
-        
-        
-        
-        
-        
-         <img alt="user" src={imageUrl || currentUser.profilePicture}   className='rounded-full  object-cover  h-full w-full border-8 border-[lightgray]'  />
+        <img alt="user" src={imageUrl || currentUser.profilePicture}   className='rounded-full  object-cover  h-full w-full border-8 border-[lightgray]'  />
    
          
          </div> 
@@ -287,40 +286,44 @@ const handleChange = (e) =>{
          
         <TextInput className='w-80' id="passowrd" type="password" placeholder='password' onChange={handleChange} />
         
+    
         
         
-        
-         <Button type="submit" gradientDuoTone='purpleToBlue' outline>update</Button>
+         <Button type="submit" gradientDuoTone='purpleToBlue' outline disabled={loading || imageuploding}>{loading ? "loading":"update"}</Button>
          
+        
+         {currentUser.isAdmin && 
+         
+         <Link to="/createpost">
+         <Button type="button" gradientDuoTone='purpleToPink' className='w-full'>Create Post
+          
+         
+          </Button>
+          
+          </Link>
+          }
+        
+        
+        
          <div className='flex justify-between text-red-500 mt-4'>
                
                 <span onClick={() => setShowmodel(true)} className='font-bold cursor-pointer'>Delete Account</span>
               
                 <span onClick={handlesignout} className='font-bold'>Sign Out</span>
              </div>
-         
-         </form>
-      
-      
-        </div>
+          </form>
+       </div>
 
-
-   
-   
       <Modal show={showmodel} 
       
       onClose={() => setShowmodel(false)}
       popup
       size="md"
-      
       >
-
-
-       <Modal.Header/> 
+         <Modal.Header/> 
 
        <Modal.Body>
-
-      <div className='text-center'>
+     <div className='text-center'>
       <FaCircleExclamation  className='h-14 w-14 text-gray-500 dark:text-gray-200 mb-4 mx-auto'/>
       <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>Are you sure you want to delete your account</h3>
       
@@ -333,16 +336,9 @@ const handleChange = (e) =>{
        
          <Button color="gray" onClick={() => setShowmodel(false)}>No ,Cancel</Button>
          </div>
-        
-        
          </div>
 
-
-
-       </Modal.Body>
-       
-       
-       
+      </Modal.Body>
         </Modal>
    
       

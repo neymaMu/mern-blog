@@ -11,6 +11,8 @@ import Projects from './pages/Projects'
 import Header from './componets/Header'
 import Footer from './componets/Footer'
 import PrivateRoute from './componets/PrivateRoute'
+import OnlyAdminRoute from './componets/OnlyAdminRoute'
+import CreatePost from './pages/CreatePost'
 
 
 
@@ -30,6 +32,13 @@ export default function App() {
         
        <Route path='/signup'  element={<SignUp/>}/> 
        
+      
+            <Route element={<OnlyAdminRoute/>}> 
+            <Route  path="/createpost" element={<CreatePost/>} />
+
+            </Route>
+      
+      
        <Route element={<PrivateRoute/>}>
        <Route path="/dashbord" element={<Dashborad/>} />
 
