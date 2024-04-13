@@ -10,8 +10,9 @@ export default function DashPosts() {
      const{currentUser} = useSelector((state) => state.user)
   
      const[userPosts,setUserPosts] = useState([])
-
-      console.log(userPosts)
+     
+     const[showmore, setShowmore] = useState(true)
+    
      
      
      useEffect(() => {
@@ -25,6 +26,10 @@ export default function DashPosts() {
          const data = await res.json()
         if(res.ok){
           setUserPosts(data.posts)
+         
+          if(data.posts.length < 9 ){
+            setShowmore(false)
+          }
         }
       }
       catch(error){
@@ -39,12 +44,46 @@ export default function DashPosts() {
   
   
   
+
+ 
+ 
+ 
+  const handleShowMore = async () => {
+    const startIndex = userPosts.length;
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`
+      );
+      const data = await res.json();
+      if (res.ok) {
+        setUserPosts((prev) => [...prev, ...data.posts]);
+        if (data.posts.length < 9) {
+          setShowmore(false);
+        }
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
   return (
    
     <div className='table-auto md:ml-20 overflow-x-scroll  p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500'>
 
           {currentUser.isAdmin && userPosts.length > 0 ? 
-
+              
+              <>
             <Table hoverable className='shadow-md'>
 
             <Table.Head> 
@@ -129,17 +168,16 @@ export default function DashPosts() {
          
          
              
-             
-             </Table>
+                 </Table>
+          
+          
+          {showmore && <button onClick={handleShowMore} className='w-full text-teal-500 self-center text-sm py-7'>show more</button>}
+          
+       
           
           
           
-          
-          
-          
-          
-          
-          
+          </>
             : 
           
         <p>no posts </p>
