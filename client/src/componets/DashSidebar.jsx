@@ -5,6 +5,9 @@ import{Link, useLocation} from 'react-router-dom'
 
 import { signoutSuccses } from '../redux/user/userSlice'
 import {  useDispatch} from 'react-redux'
+import { MdOutlinePostAdd } from "react-icons/md";
+import{useSelector} from 'react-redux'
+ 
 
 
 export default function DashSidebar() {
@@ -16,6 +19,7 @@ export default function DashSidebar() {
  
  const[tab, setTab] = useState("")
  
+   const{currentUser} = useSelector((state) => state.user)
  
  useEffect(() => {
    
@@ -71,15 +75,23 @@ export default function DashSidebar() {
 
    <Sidebar.Items>
 
-   <Sidebar.ItemGroup>
+   <Sidebar.ItemGroup className='flex flex-col gap-3'>
 
     <Link to="/dashbord?tab=profile">
-    <Sidebar.Item active={tab === 'profile'} icon={HiUser} label={"user"} labelColor='dark' as='div'>
+    <Sidebar.Item active={tab === 'profile'} icon={HiUser} label={currentUser.isAdmin ? "admin" : "user"} labelColor='dark' as='div'>
 
         Profile
     </Sidebar.Item>
-  </Link>
-   
+     </Link>
+       
+       {currentUser.isAdmin && <Link to="/dashbord?tab=posts">
+       <Sidebar.Item active={tab === 'posts'} as="div" icon={MdOutlinePostAdd}>
+        posts
+       </Sidebar.Item>
+       
+       
+       </Link> }
+      
    
    
    
