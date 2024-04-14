@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import{useSelector} from 'react-redux'
-import{Table} from 'flowbite-react'
+import{Table,Modal,Button} from 'flowbite-react'
 import{Link} from 'react-router-dom'
-
+import { FaCircleExclamation } from "react-icons/fa6";
 
 
 export default function DashPosts() {
@@ -13,7 +13,9 @@ export default function DashPosts() {
      
      const[showmore, setShowmore] = useState(true)
     
-     
+
+      const[showModel,setShowModel] = useState(false)
+      const [postIdToDelete, setPostIdToDelete] = useState('');
      
      useEffect(() => {
      
@@ -68,7 +70,35 @@ export default function DashPosts() {
  
  
  
- 
+  const handleDeletUser = async() =>{
+    setShowModel(false);
+  try{
+
+  const res = await fetch(`http://localhost:5000/api/post/deletpost/${postIdToDelete}/${currentUser._id}`,{
+    credentials: 'include',
+  method:"DELETE"
+  
+
+})
+   
+  
+  const data = await res.json() 
+
+
+ if(!res.ok){
+  console.log(data.message)
+ }else{
+  setUserPosts((prev) => prev.filter((post) => post._id !== postIdToDelete))
+ }
+  
+  }
+  catch(error){
+    console.log(error)
+  }
+  
+  
+  
+  }
 
  
  
@@ -143,13 +173,13 @@ export default function DashPosts() {
         
              
              <Table.Cell>
-              <span className='text-red-500 hover:underline cursor-pointer'>Delete</span>
+              <span className='text-red-500 hover:underline cursor-pointer' onClick={() => {setShowModel(true);setPostIdToDelete(post._id)}}>Delete</span>
               </Table.Cell>
              
              
               
               <Table.Cell>
-                <Link className='text-blue-900 hover:underline' to={`/update-post/${post._id}`}>
+                <Link className='text-blue-900 hover:underline' to={`/update/${post._id}`}>
                 <span>Edit</span>
                 </Link>
               </Table.Cell>
@@ -188,7 +218,41 @@ export default function DashPosts() {
 
 
 
+<Modal show={showModel} 
+      
+      onClose={() => setShowModel(false)}
+      popup
+      size="md"
+      >
+         <Modal.Header/> 
 
+       <Modal.Body>
+     <div className='text-center'>
+      <FaCircleExclamation  className='h-14 w-14 text-gray-500 dark:text-gray-200 mb-4 mx-auto'/>
+      <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>Are you sure you want to delete this post</h3>
+      
+        
+        <div className='flex justify-center gap-4'>
+          <Button color="failure" onClick={handleDeletUser}>
+            Yes Am Sure
+          </Button>
+       
+       
+         <Button color="gray" onClick={() => setShowModel(false)}>No ,Cancel</Button>
+         </div>
+         </div>
+
+      </Modal.Body>
+        </Modal>
+   
+        
+        
+        
+        
+        
+        
+        
+        
          </div>
  
  
