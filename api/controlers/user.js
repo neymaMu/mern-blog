@@ -85,4 +85,59 @@ export const signout = (req,res,next) =>{
   catch(error){
     next(error)
   }
+} 
+
+
+//get users 
+
+export const getUser = async(req,res) =>{
+
+ if(!req.user.isAdmin){
+  return next(errorHandler(403, "cant get users"))
+ }
+
+try{
+
+  const startIndex = parseInt(req.query.startIndex) || 0 
+  const limit = parseInt(req.query.limit) || 9
+ 
+  const sortDirection = req.query.sort === "asc" ? 1 : -1 
+
+  const users = await User.find().sort({createdAt:sortDirection}).skip(startIndex).limit(limit)
+  
+   
+      const userWithoutpassword = users.map((user)=>{
+        const{password, ...rest} =user._doc
+    
+    return rest 
+      })
+   
+
+      const totalposts = await User.countDocuments() 
+
+      const now = new Date()
+ 
+   
+      const onemonth = new Date(
+         now.getFullYear(),
+         now.getMonth() -1 ,
+         now.getDate()
+
+      )
+    
+    
+    const lastmothuser = await User.countDocuments({
+
+      createdAt:{$gte:onemonth}
+    })
+    
+  
+  res.status(200).json({userWithoutpassword,totalposts,lastmothuser})
+  
+  }
+catch(error){
+  next(error)
+}
+
+
 }
