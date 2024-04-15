@@ -7,7 +7,7 @@ import { signoutSuccses } from '../redux/user/userSlice'
 import {  useDispatch} from 'react-redux'
 import { MdOutlinePostAdd } from "react-icons/md";
 import{useSelector} from 'react-redux'
- 
+import { FaUsers } from "react-icons/fa";
 
 
 export default function DashSidebar() {
@@ -94,8 +94,23 @@ export default function DashSidebar() {
       
    
    
+       {currentUser.isAdmin && <Link to="/dashbord?tab=users">
+       <Sidebar.Item active={tab === 'users'} as="div" 
+       icon={FaUsers }>
+       users
+       
+       </Sidebar.Item>
+       
+       
+       </Link> }
+      
    
    
+    
+    
+    
+    
+    
     <Sidebar.Item onClick={handlesignout}  icon={HiArrowRight} className="cursor-pointer">
        Sign Out
         
