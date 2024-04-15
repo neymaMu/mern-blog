@@ -13,7 +13,7 @@ export default function DashUser() {
      const[userPosts,setUserPosts] = useState([])
      
      const[showmore, setShowmore] = useState(true)
-    
+   
 
       const[showModel,setShowModel] = useState(false)
       const [postIdToDelete, setPostIdToDelete] = useState('');
@@ -86,9 +86,36 @@ export default function DashUser() {
  
  
  
-  const handleDeletUser = () =>{
+  const handleDeletUser =async () =>{
 
- }
+  try{
+  
+    const res = await fetch(`http://localhost:5000/api/user/delete/${postIdToDelete}`,{
+      method:"DELETE",
+    credentials: 'include',
+    })
+
+     const data = await res.json()
+
+       if(res.ok){
+          setUserPosts((prev) => prev.filter((post) => post._id !== postIdToDelete))
+          setShowModel(false)
+     
+     
+        }else{
+      console.log(data.message)
+     }
+    
+     
+    
+    }
+  catch(error){
+    console.log(error)
+  }
+  
+  
+  
+  }
    
  
  
@@ -118,7 +145,7 @@ export default function DashUser() {
        {userPosts.map((post) => (
 
 
-       <Table.Body className='divide-y' key={user._id}>
+       <Table.Body className='divide-y' key={post._id}>
 
        <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
 

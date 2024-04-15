@@ -14,6 +14,7 @@ import PrivateRoute from './componets/PrivateRoute'
 import OnlyAdminRoute from './componets/OnlyAdminRoute'
 import CreatePost from './pages/CreatePost'
 import UpdatePost from './pages/UpdatePost'
+import PostPage from './componets/PostPage'
 
 
 
@@ -47,7 +48,10 @@ export default function App() {
 
       </Route>
       
-       <Route path="/projects" element={<Projects/>} />
+       <Route path="/projects" element={<Projects/>} /> 
+       
+       
+       <Route path="/post/:postId" element={<PostPage/>} />
   
 
   

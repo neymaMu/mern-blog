@@ -114,7 +114,7 @@ export default function DashPosts() {
           {currentUser.isAdmin && userPosts.length > 0 ? 
               
               <>
-            <Table hoverable className='shadow-md'>
+            <Table hoverable className='shadow-md' >
 
             <Table.Head> 
             
@@ -137,7 +137,7 @@ export default function DashPosts() {
              {userPosts.map((post) => (
 
 
-             <Table.Body className='divide-y'>
+             <Table.Body className='divide-y'  key={post._id}>
 
              <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
 
