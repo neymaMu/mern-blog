@@ -15,6 +15,7 @@ import OnlyAdminRoute from './componets/OnlyAdminRoute'
 import CreatePost from './pages/CreatePost'
 import UpdatePost from './pages/UpdatePost'
 import PostPage from './componets/PostPage'
+import ScrollToTop from './componets/ScrollToTop'
 
 
 
@@ -23,6 +24,9 @@ import PostPage from './componets/PostPage'
 export default function App() {
   return (
     <BrowserRouter>
+   
+   <ScrollToTop/>
+   
       <Header/>
    <Routes>
 
