@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
+import { AiFillLike } from "react-icons/ai";
+import{useSelector } from 'react-redux'
 
-
-
-export default function ComentPage({comen}) {
+export default function ComentPage({comen,onLike}) {
  const[user,setUser] = useState({})
+ 
+ const{currentUser} = useSelector((state) => state.user)
+ 
  
  
  useEffect(() => {
@@ -53,7 +56,25 @@ getUsers()
        </div>
        <p className='text-gray-500 pb-2'>{comen.content}</p>
 
-      </div>
+      
+      <div className='flex items-center pt-2 text-xs border-t dark:border-gray-700 max-w-fit gap-2' >
+          
+           <button type='button' onClick={() => onLike(comen._id)}>
+           
+           
+            <AiFillLike className={`text-blue-500 text-lg hover:text-blue-900 ${currentUser &&comen.likes.includes(currentUser._id)&&`!text-red-500`}`} />
+          
+          
+            </button>
+     
+           <p className='text-gray-400'>{comen.numberOflikes > 0 && comen.numberOflikes + " " + (comen.numberOflikes === 1 ? "like" : "likes")}</p>
+      
+      
+      
+      
+        </div>
+      
+       </div>
 
 
 

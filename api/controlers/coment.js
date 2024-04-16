@@ -42,4 +42,41 @@ import Comment from "../models/coment.js"
     catch(error){
         next(error)
     }
- }
+ } 
+
+
+ //like the comment 
+
+ export const likeComent =async (req,res,next) => {
+
+  try{
+
+ const coment = await Comment.findById(req.params.comentId)
+  
+  if(!coment){
+    return next(errorHandler(404,"no coment"))
+  }
+
+
+const userIndex = coment.likes.indexOf(req.user.id)
+
+  if(userIndex === -1){
+    coment.numberOflikes +=1
+    coment.likes.push(req.user.id)
+  }
+
+  else{
+    coment.numberOflikes -=1
+    coment.likes.splice(userIndex, 1)
+  }
+    
+await coment.save() 
+res.status(200).json(coment)
+
+
+}
+  catch(error){
+    next(error)
+  }
+ 
+}
