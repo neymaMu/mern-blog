@@ -79,4 +79,29 @@ res.status(200).json(coment)
     next(error)
   }
  
+} 
+
+//edit coment 
+
+export const Editcoment = async(req,res,next)=>{
+
+  try{
+
+     const coment = await Comment.findById(req.params.comentId)
+      if(!coment){
+        return next(errorHandler(404 ,"can find coment"))
+      }
+    
+        if(coment.userId !== req.user.id && !req.user.isAdmin){
+          return next(errorHandler(403,"you are not allwoed to edit this coment"))
+        }
+  
+     const editComent = await Comment.findByIdAndUpdate(req.params.comentId,{content:req.body.content},{new:true})
+     
+     res.status(200).json(editComent)
+        
+    }
+ catch(error){
+    next(error)
+  }
 }

@@ -2,9 +2,18 @@ import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import { AiFillLike } from "react-icons/ai";
 import{useSelector } from 'react-redux'
+import{Button, Textarea} from 'flowbite-react'
 
-export default function ComentPage({comen,onLike}) {
- const[user,setUser] = useState({})
+
+
+export default function ComentPage({comen,onLike,onEdit}) {
+ 
+   const[user,setUser] = useState({})
+   
+   const[isEditing,setIsEditing] = useState(false)
+   
+   const[editContent,setEditContent] = useState(comen.content)
+ 
  
  const{currentUser} = useSelector((state) => state.user)
  
@@ -35,9 +44,45 @@ getUsers()
  
 
  
+ const handleEdit =async () => {
+   setIsEditing(true)
+   setEditContent(comen.content)
+
+ }
+ 
+     
  
  
-    return (
+ const handlesave = async() => {
+
+  try{
+  const res = await fetch(`http://localhost:5000/api/coment/editcoment/${comen._id}`,{
+    method:"PUT",
+    credentials: 'include',
+    headers:{
+      "Content-Type" : "application/json"
+    },
+    body:JSON.stringify({
+      content:editContent
+    })
+    })
+
+   if(res.ok){
+    setIsEditing(false)
+    onEdit(comen,editContent)
+
+   }
+  }
+  catch(error){
+    console.log(error)
+  }
+ }
+ 
+ 
+ 
+ 
+ 
+   return (
     <div className='flex p-4 border-b dark:border-gray-600 text-sm'>
     
     <div className='flex-shrink-0 mr-3'>
@@ -54,27 +99,61 @@ getUsers()
        </span>
      
        </div>
-       <p className='text-gray-500 pb-2'>{comen.content}</p>
+     
+       
+       {isEditing ?
+       
+       <>
+       <Textarea className="mb-2"
+        value={editContent}
+        onChange={(e) =>setEditContent(e.target.value)}/>
+       
+        <div className='flex justify-end text-xs gap-2'>
+        <Button onClick={handlesave} type="button" size='sm' gradientDuoTone='purpleToBlue'>save</Button>
+          
+          <Button onClick={() => setIsEditing(false)} type="button" size='sm' gradientDuoTone='purpleToBlue'outline>cancel</Button>
+         
+        </div>
+       
+        </>
+      
+      
+      : <> <p className='text-gray-500 pb-2'>{comen.content}</p>
 
       
-      <div className='flex items-center pt-2 text-xs border-t dark:border-gray-700 max-w-fit gap-2' >
-          
-           <button type='button' onClick={() => onLike(comen._id)}>
-           
-           
-            <AiFillLike className={`text-blue-500 text-lg hover:text-blue-900 ${currentUser &&comen.likes.includes(currentUser._id)&&`!text-red-500`}`} />
-          
-          
-            </button>
+<div className='flex items-center pt-2 text-xs border-t dark:border-gray-700 max-w-fit gap-2' >
+    
+     <button type='button' onClick={() => onLike(comen._id)}>
      
-           <p className='text-gray-400'>{comen.numberOflikes > 0 && comen.numberOflikes + " " + (comen.numberOflikes === 1 ? "like" : "likes")}</p>
+     
+      <AiFillLike className={`text-blue-500 text-lg hover:text-blue-900 ${currentUser &&comen.likes.includes(currentUser._id)&&`!text-red-500`}`} />
+    
+    
+      </button>
+
+     <p className='text-gray-400'>{comen.numberOflikes > 0 && comen.numberOflikes + " " + (comen.numberOflikes === 1 ? "like" : "likes")}</p>
+
+
+     {currentUser && (currentUser._id === comen.userId || currentUser.isAdmin)  &&
+      
+      <button 
+      onClick={handleEdit}
+      type='button'
+      className='text-gray-400 hover:text-red-500'>
+        Edit
+      </button>
       
       
-      
-      
-        </div>
-      
-       </div>
+      }
+</div>
+
+  </>}
+       
+     
+     
+     
+     
+      </div>
 
 
 

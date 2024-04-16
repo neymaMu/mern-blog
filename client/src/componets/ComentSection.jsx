@@ -94,7 +94,15 @@ export default function ComentSection({postId}) {
  
  
  
- 
+ const handleEditing = (comment,editContent)=>{
+
+
+  setComments(
+    comments.map((c)=>
+      c._id === comment._id?{...c,content:editContent}:c
+    )
+  )
+ }
  
  
  
@@ -176,7 +184,7 @@ export default function ComentSection({postId}) {
    
   
   {comments.map((comen) => (
-    <ComentPage key={comen._id} comen={comen} onLike={handleLike}/>
+    <ComentPage key={comen._id} comen={comen} onLike={handleLike} onEdit={handleEditing}/>
   ))}
   
   
