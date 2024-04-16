@@ -24,4 +24,22 @@ import Comment from "../models/coment.js"
     catch(error){
         next(error)
     }
+ } 
+
+
+ //get comment 
+
+ export const getComent = async(req,res,next) => {
+
+    try{
+
+   const coment = await Comment.find({postId:req.params.postId}).sort({createdAt:-1})
+
+    res.status(200).json(coment)
+    
+    
+    }
+    catch(error){
+        next(error)
+    }
  }

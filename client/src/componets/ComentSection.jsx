@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import{useSelector} from 'react-redux'
 import { Link } from 'react-router-dom'
 import{Alert, Button, Textarea} from 'flowbite-react'
-
+import ComentPage from './ComentPage'
 
 export default function ComentSection({postId}) {
  
    const[comment,setComment] = useState('')
    const[errormessage,setErrormessage] = useState(null)
-    
+    const[comments,setComments] = useState([])
    
    const{currentUser} = useSelector((state) => state.user)
  
@@ -35,6 +35,7 @@ export default function ComentSection({postId}) {
         if(res.ok){
           setComment('')
           setErrormessage(null)
+          setComments([data, ...comments])
         }
      }
      catch(error){
@@ -47,7 +48,44 @@ export default function ComentSection({postId}) {
     
     
     
-    return (
+  useEffect(() => {
+    fetchComent()
+  },[postId])  
+ 
+ 
+ const fetchComent = async() => {
+
+
+  try{
+
+  const res = await fetch(`http://localhost:5000/api/coment/getcoment/${postId}`)
+
+   if(res.ok){
+    const data = await res.json()
+    setComments(data)
+  
+  }
+  
+  }
+  catch(error){
+    console.log(error)
+  }
+ }
+ 
+console.log(comments) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ return (
     <div className='p-2 max-w-2xl mx-auto w-full '>
 
 
@@ -104,12 +142,34 @@ export default function ComentSection({postId}) {
   
    
    </form>
-
-
-
-
 }
 
+   
+   {comments === 0 ? <p>no Comments</p> :
+   
+   
+   
+   <>
+   <div className='text-sm my-5 flex items-center gap-1'>
+    <p>Comments</p>
+    <div className='border border-gray-500 py-1 px-2 rounded-sm'>
+      <p>{comments.length}</p>
+    </div>
+   </div>
+   
+  
+  {comments.map((comen) => (
+    <ComentPage key={comen._id} comen={comen}/>
+  ))}
+  
+  
+   </>
+   
+   
+   }
+   
+   
+   
     </div>
   )
 }
