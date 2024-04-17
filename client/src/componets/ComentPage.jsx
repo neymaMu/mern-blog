@@ -6,7 +6,7 @@ import{Button, Textarea} from 'flowbite-react'
 
 
 
-export default function ComentPage({comen,onLike,onEdit}) {
+export default function ComentPage({comen,onLike,onEdit,onDelete}) {
  
    const[user,setUser] = useState({})
    
@@ -135,7 +135,7 @@ getUsers()
 
 
      {currentUser && (currentUser._id === comen.userId || currentUser.isAdmin)  &&
-      
+      <>
       <button 
       onClick={handleEdit}
       type='button'
@@ -143,7 +143,15 @@ getUsers()
         Edit
       </button>
       
-      
+      <button 
+      onClick={() => onDelete(comen._id)}
+      type='button'
+      className='text-gray-400 hover:text-red-500'>
+      Delete
+      </button>
+     
+     
+      </>
       }
 </div>
 

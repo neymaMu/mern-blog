@@ -153,20 +153,20 @@ export default function DashUser() {
 
          <Table.Cell>
 
-          <Link to={`/post/${post.slug}`}>
+        
           
-          <img src={post.image} alt={post.title}  className='w-10 h-10 object-cover rounded-full bg-green-200'/>
+          <img src={post.profilePicture} alt={post.title}  className='w-10 h-10 object-cover rounded-full bg-green-200'/>
           
-          </Link>
+        
          </Table.Cell>
        
          
           <Table.Cell>
           
-          <Link className='font-medium text-gray-900 dark:text-white' to={`/post/${post.slug}`}>
+      
           
              {post.username}
-          </Link>
+   
 
 
           </Table.Cell>

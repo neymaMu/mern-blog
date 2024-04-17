@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import{useSelector} from 'react-redux'
 import { Link } from 'react-router-dom'
-import{Alert, Button, Textarea} from 'flowbite-react'
+import{Alert, Button, Textarea,Modal} from 'flowbite-react'
 import ComentPage from './ComentPage'
+import { FaCircleExclamation } from "react-icons/fa6";
+import {  useNavigate } from 'react-router-dom';
 
 export default function ComentSection({postId}) {
  
    const[comment,setComment] = useState('')
    const[errormessage,setErrormessage] = useState(null)
     const[comments,setComments] = useState([])
+     const[showmodel,setShowmodel] = useState(false)
+     const[comenttodelete,setComenttodelete] = useState(null)
    
-   const{currentUser} = useSelector((state) => state.user)
+     const navigate = useNavigate();
+    const{currentUser} = useSelector((state) => state.user)
  
  
      const handleSubmit = async(e) => {
@@ -73,7 +78,7 @@ export default function ComentSection({postId}) {
  const handleLike = async (commentId) => {
   try {
     if (!currentUser) {
-      //navigate('/signin');
+      navigate('/signin');
       return;
     }
     const res = await fetch(`http://localhost:5000/api/coment/likecoment/${commentId}`, {
@@ -105,7 +110,40 @@ export default function ComentSection({postId}) {
  }
  
  
+ const handleDelete = async(commentId) => {
+   setShowmodel(false)
+ try{
+
+
+
+const res = await fetch(`http://localhost:5000/api/coment/deletecoment/${commentId}`,{
+  method:"DELETE",
+  credentials: 'include',
+  headers:{
+    "Content-Type" : "application/json"
+  },
+  
+  })
+
+if(res.ok){
+  const data = await res.json() 
+
+
  
+      setComments(comments.filter((coment) => coment._id !== commentId))
+  
+  
+}
+
+
+
+}
+ catch(error){
+  console.log(error)
+ }
+
+
+}
  
  
  
@@ -184,7 +222,16 @@ export default function ComentSection({postId}) {
    
   
   {comments.map((comen) => (
-    <ComentPage key={comen._id} comen={comen} onLike={handleLike} onEdit={handleEditing}/>
+    <ComentPage key={comen._id} comen={comen} onLike={handleLike} onEdit={handleEditing}
+    
+    
+    onDelete={(commentId) => {
+      setShowmodel(true) 
+      setComenttodelete(commentId)
+    }}
+    />
+  
+  
   ))}
   
   
@@ -195,6 +242,48 @@ export default function ComentSection({postId}) {
    
    
    
+    
+   <Modal show={showmodel} 
+      
+      onClose={() => setShowmodel(false)}
+      popup
+      size="md"
+      >
+         <Modal.Header/> 
+
+       <Modal.Body>
+     <div className='text-center'>
+      <FaCircleExclamation  className='h-14 w-14 text-gray-500 dark:text-gray-200 mb-4 mx-auto'/>
+      <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>Are you sure you want to delete this Coment</h3>
+      
+        
+        <div className='flex justify-center gap-4'>
+          <Button color="failure" onClick={()=>handleDelete(comenttodelete)}>
+            Yes Am Sure
+          </Button>
+       
+       
+         <Button color="gray" onClick={() => setShowmodel(false)}>No ,Cancel</Button>
+         </div>
+         </div>
+
+      </Modal.Body>
+        </Modal>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     </div>
   )
 }

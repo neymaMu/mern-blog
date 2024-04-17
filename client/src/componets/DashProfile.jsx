@@ -66,46 +66,74 @@ export default function DashProfile() {
     
     
     const  uploadimage = async() =>{
+    
+
+      try{
+
+        if(!imageFile){
+         setImageError('please select an image')
+      
+         return
+     }
       setImageError(null)
       setImageuploding(true)
-      const storage = getStorage(app)
-      const filename = new Date().getTime() +  imageFile.name;
-      const storageRef = ref(storage, filename)
-      const uploadTask = uploadBytesResumable(storageRef, imageFile)
-      
-      uploadTask.on(
+     const storage = getStorage(app)
+     const fileName = new Date().getTime() + '-' + imageFile.name
+     
+     const storageRef = ref(storage,fileName)
+     const uploadTask = uploadBytesResumable(storageRef,imageFile)
+     
+     uploadTask.on(
        'state_changed',
-       (snapshot) =>{
+       (snapshot)=>{
          const progress = 
-         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
          setImageProgress(progress.toFixed(0))
        },
-        
-       (error)=>{
-           setImageError("could not upload the image")
-       
-       
-       setImageFile(null)
-       setImageUrl(null)
-       setImageuploding(false)
-       
-        },
 
-       () => {
-         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => { setImageFile(downloadURL)
-          setFormData({ ...formData, profilePicture:downloadURL})
-          setImageuploding(false)
+       (error)=>{
+         setImageError('image upload faild')
+         setImageProgress(null)
+         setImageuploding(null)
+       },
+       ()=>{
+         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>{
+           setImageProgress(null)
+           setImageError(null)
+           setFormData({ ...formData,profilePicture:downloadURL})
+           setImageuploding(false)
          })
        }
-   )
-      
+      )
    }
+       catch(error){
+       console.log(error)
+      }
+    }
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    
    
    
 const handleChange = (e) =>{
 
- setFormData({ ...formData,[e.target.id]: e.target.value})
+ setFormData({...formData,[e.target.id]: e.target.value})
 
 }
    
@@ -236,11 +264,11 @@ const handleChange = (e) =>{
          <form onSubmit={handleSubmit} className='flex flex-col md:ml-80 gap-3 '>
          
        
-       <input hidden type="file"   onChange={handleimagechange} ref={filePickerRef}/>
+       <input hidden type="file"   onChange={handleimagechange } ref={filePickerRef}/>
        
        
        
-         <div  onClick={() => filePickerRef.current.click()} className='w-20 h-20 relative  self-center cursor-pointer  shadow-md overflow-hidden rounded-full'>
+         <div onClick={() => filePickerRef.current.click()} className='w-20 h-20 relative  self-center cursor-pointer  shadow-md overflow-hidden rounded-full'>
        
     
        

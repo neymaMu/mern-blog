@@ -104,4 +104,32 @@ export const Editcoment = async(req,res,next)=>{
  catch(error){
     next(error)
   }
+} 
+
+
+//delete coment 
+
+export const Deletecoment = async(req,res,next) => {
+
+  try{
+
+const coment = await Comment.findById(req.params.comentId)
+if(!coment){
+  return next(errorHandler(404,"no coment"))
+}
+
+  if(coment.userId !== req.user.id && !req.user.isAdmin){
+    return next(errorHandler(403,"you are not alowed to delet the coment"))
+  }
+  await Comment.findByIdAndDelete(req.params.comentId)
+  
+  
+
+res.status(200).json('coment delete')
+
+
+}
+  catch(error){
+    next(error)
+  }
 }
