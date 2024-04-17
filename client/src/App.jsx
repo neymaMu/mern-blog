@@ -16,6 +16,7 @@ import CreatePost from './pages/CreatePost'
 import UpdatePost from './pages/UpdatePost'
 import PostPage from './componets/PostPage'
 import ScrollToTop from './componets/ScrollToTop'
+import Search from './componets/Search'
 
 
 
@@ -53,7 +54,7 @@ export default function App() {
       </Route>
       
        <Route path="/projects" element={<Projects/>} /> 
-       
+       <Route path='/search' element={<Search/>} />
        
        <Route path="/post/:postSlug" element={<PostPage/>} />
   
