@@ -37,7 +37,7 @@ export default function Dashbordcompnent() {
 
 
         const res = await fetch(`http://localhost:5000/api/user/getuser?limit=5`,{
-            credentials: 'include',
+          
         })
 
         const data = await res.json() 
@@ -64,7 +64,7 @@ export default function Dashbordcompnent() {
 
 
             const res = await fetch(`http://localhost:5000/api/post/getposts?limit=5`,{
-                credentials: 'include',
+              
             })
     
             const data = await res.json() 
@@ -92,7 +92,7 @@ export default function Dashbordcompnent() {
 
 
         const res = await fetch(`http://localhost:5000/api/coment/getcomments?limit=5`,{
-            credentials: 'include',
+        
         })
 
         const data = await res.json() 

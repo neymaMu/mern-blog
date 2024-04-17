@@ -23,9 +23,7 @@ export default function DashPosts() {
 
        try{
 
-        const res = await fetch(`http://localhost:5000/api/post/getposts?userId=${currentUser._id}`,{
-          credentials: 'include',
-        })
+        const res = await fetch(`http://localhost:5000/api/post/getposts?userId=${currentUser._id}`)
 
          const data = await res.json()
         if(res.ok){
@@ -77,7 +75,7 @@ export default function DashPosts() {
   try{
 
   const res = await fetch(`http://localhost:5000/api/post/deletpost/${postIdToDelete}/${currentUser._id}`,{
-    credentials: 'include',
+ 
   method:"DELETE"
   
 

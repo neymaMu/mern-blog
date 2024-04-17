@@ -81,7 +81,7 @@ import{useNavigate} from 'react-router-dom'
          const res = await fetch("http://localhost:5000/api/post/create",{
 
           method:"POST",
-          credentials: 'include',
+     
           headers:{
             "Content-Type" : "application/json"
           },

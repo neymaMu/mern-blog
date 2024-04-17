@@ -87,7 +87,7 @@ import{useSelector} from 'react-redux'
          const res = await fetch(`http://localhost:5000/api/post/updatedpost/${postId}/${currentUser._id}`,{
 
           method:"PUT",
-          credentials: 'include',
+      
           headers:{
             "Content-Type" : "application/json"
           },

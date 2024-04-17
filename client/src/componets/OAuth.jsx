@@ -30,7 +30,7 @@ try{
 console.log(resultfromgoogle)
  const res = await fetch('http://localhost:5000/api/auth/google',{
   method:"POST",
-  credentials: 'include',
+ 
   headers:{'Content-Type' : 'application/json'},
    body:JSON.stringify({
     name:resultfromgoogle.user.displayName,

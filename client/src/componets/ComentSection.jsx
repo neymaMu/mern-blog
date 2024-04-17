@@ -28,7 +28,7 @@ export default function ComentSection({postId}) {
      try{
       const res = await fetch(`http://localhost:5000/api/coment/create`,{
         method:"POST",
-        credentials: 'include',
+      
         headers:{
           "Content-Type" : "application/json"
         },
@@ -83,7 +83,7 @@ export default function ComentSection({postId}) {
     }
     const res = await fetch(`http://localhost:5000/api/coment/likecoment/${commentId}`, {
       method: 'PUT',
-      credentials: 'include',
+   
     });
     if (res.ok) {
       const data = await res.json();
@@ -118,7 +118,7 @@ export default function ComentSection({postId}) {
 
 const res = await fetch(`http://localhost:5000/api/coment/deletecoment/${commentId}`,{
   method:"DELETE",
-  credentials: 'include',
+
   headers:{
     "Content-Type" : "application/json"
   },
