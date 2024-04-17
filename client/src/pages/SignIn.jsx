@@ -57,7 +57,7 @@ export default function SignIn() {
             setLoading(false)
             setErrorMessage(true)
    
-           if(res.ok){
+         
            
         if(res.ok){
         
@@ -65,7 +65,7 @@ export default function SignIn() {
             navigate("/")
           }
   
-           }
+           
    
    
           }catch(error){
@@ -161,7 +161,7 @@ export default function SignIn() {
   
   
   <div className='mt-5 flex gap-3 text-sm'>
-   <span>Have an Account?</span>
+   <span> Dont Have an Account?</span>
    <Link to="/signup" className='text-blue-700 font-bold'>
    Sign In
    </Link>
