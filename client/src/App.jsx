@@ -55,7 +55,7 @@ export default function App() {
        <Route path="/projects" element={<Projects/>} /> 
        
        
-       <Route path="/post/:postId" element={<PostPage/>} />
+       <Route path="/post/:postSlug" element={<PostPage/>} />
   
 
   

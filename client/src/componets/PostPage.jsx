@@ -14,12 +14,12 @@ export default function PostPage() {
     
  
  
- const{postId} = useParams()
+ const { postSlug } = useParams();
  
  
  useEffect(() =>{
     fetchPost()
- },[postId])
+ },[postSlug])
  
    
    const fetchPost =async () =>{
@@ -28,7 +28,7 @@ export default function PostPage() {
 
       setLoading(true) 
 
-      const res = await fetch(`http://localhost:5000/api/post/getposts?slug=${postId}`)
+      const res = await fetch(`http://localhost:5000/api/post/getposts?slug=${postSlug}`)
       
       const data = await res.json()
       
@@ -54,7 +54,7 @@ export default function PostPage() {
         setLoading(false)
     }
    }
- 
+
  
  
    useEffect(() => {
@@ -75,7 +75,7 @@ export default function PostPage() {
   
   
   
-  
+
   
   
    if(loading) return(
@@ -143,7 +143,7 @@ export default function PostPage() {
 
                 {recentpost && 
                 
-              recentpost.map((pos) => <PostCard key={pos._id} pos={pos}/>)}
+              recentpost.map((post) => <PostCard key={post._id} post={post}/>)}
               </div>
               
               

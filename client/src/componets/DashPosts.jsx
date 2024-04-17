@@ -23,7 +23,9 @@ export default function DashPosts() {
 
        try{
 
-        const res = await fetch(`http://localhost:5000/api/post/getposts?userId=${currentUser._id}`)
+        const res = await fetch(`http://localhost:5000/api/post/getposts?userId=${currentUser._id}`,{
+          credentials: 'include',
+        })
 
          const data = await res.json()
         if(res.ok){
