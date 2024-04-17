@@ -9,6 +9,9 @@ import { MdOutlinePostAdd } from "react-icons/md";
 import{useSelector} from 'react-redux'
 import { FaUsers } from "react-icons/fa";
 import { FaRegComment } from "react-icons/fa";
+import { MdSpaceDashboard } from "react-icons/md";
+
+
 
 export default function DashSidebar() {
  
@@ -77,6 +80,30 @@ export default function DashSidebar() {
 
    <Sidebar.ItemGroup className='flex flex-col gap-3'>
 
+   {
+
+currentUser && currentUser.isAdmin &&(
+
+  <Link to='/dashbord?tab=dash'>
+  <Sidebar.Item active={tab ==="dash" || !tab} icon={MdSpaceDashboard }>
+  Dashboard
+  </Sidebar.Item>
+  
+  
+  </Link>
+)
+
+
+
+   }
+   
+   
+   
+   
+   
+   
+   
+   
     <Link to="/dashbord?tab=profile">
     <Sidebar.Item active={tab === 'profile'} icon={HiUser} label={currentUser.isAdmin ? "admin" : "user"} labelColor='dark' as='div'>
 
