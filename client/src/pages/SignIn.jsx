@@ -40,7 +40,7 @@ export default function SignIn() {
        
         setLoading(true)
         setErrorMessage(false)
-      const res = await fetch("http://localhost:5000/api/auth/signin",{
+      const res = await fetch("http://localhost:5000/api/auth/signIn",{
       method:"POST",
       credentials: 'include',
       headers:{"Content-Type":"application/json"},
@@ -145,7 +145,7 @@ export default function SignIn() {
   
   
   <Button gradientDuoTone="purpleToPink" type="submit" disabled={loading}>
-   {loading ? <> <Spinner /> <span className='pl-3'>Loading</span></> : 'SignUp' }
+   {loading ? <> <Spinner /> <span className='pl-3'>Loading</span></> : 'SignIn' }
    
    
    
@@ -162,7 +162,7 @@ export default function SignIn() {
   
   <div className='mt-5 flex gap-3 text-sm'>
    <span>Have an Account?</span>
-   <Link to="/signin" className='text-blue-700 font-bold'>
+   <Link to="/signup" className='text-blue-700 font-bold'>
    Sign In
    </Link>
   
