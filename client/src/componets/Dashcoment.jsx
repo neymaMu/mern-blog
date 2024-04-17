@@ -13,9 +13,7 @@ export default function DashComments() {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/coment/getcomments`,{
-          
-        });
+        const res = await fetch(`http://localhost:5000/api/coment/getcomments`);
         const data = await res.json();
         if (res.ok) {
           setComments(data. comments);
