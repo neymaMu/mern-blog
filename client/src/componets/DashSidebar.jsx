@@ -3,7 +3,7 @@ import { HiUser,HiArrowRight  } from "react-icons/hi";
 import React, { useEffect, useState } from 'react'
 import{Link, useLocation} from 'react-router-dom'
 
-import { signoutSuccses } from '../redux/user/userSlice'
+import { signoutSuccess } from '../redux/user/userSlice';
 import {  useDispatch} from 'react-redux'
 import { MdOutlinePostAdd } from "react-icons/md";
 import{useSelector} from 'react-redux'
@@ -53,7 +53,7 @@ export default function DashSidebar() {
     }
   
   else{
-   dispatch(signoutSuccses())
+   dispatch(signoutSuccess())
   }
      
   

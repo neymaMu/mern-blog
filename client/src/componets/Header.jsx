@@ -8,7 +8,7 @@ import{useSelector } from 'react-redux'
 import {  useDispatch} from 'react-redux'
 import { toggleTheme } from '../redux/theme/themeSlice';
 import { ImSun } from "react-icons/im";
-import { signoutSuccses } from '../redux/user/userSlice'
+import { signoutSuccess } from '../redux/user/userSlice'
 
 import { useEffect, useState } from 'react';
 
@@ -54,7 +54,7 @@ export default function Header() {
     }
   
   else{
-   dispatch(signoutSuccses())
+   dispatch(signoutSuccess())
   }
      
   

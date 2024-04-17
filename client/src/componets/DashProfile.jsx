@@ -5,7 +5,15 @@ import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/st
 import{app} from '../firbase'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { updateStart,updateSuccess,updateFalier, deleteFalier,deleteSuccess,deletUserStart,signoutSuccses } from '../redux/user/userSlice'
+import {
+  updateStart,
+  updateSuccess,
+  updateFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserFailure,
+  signoutSuccess,
+} from '../redux/user/userSlice';
 import{useDispatch} from 'react-redux'
 import { FaCircleExclamation } from "react-icons/fa6";
 import{Link} from 'react-router-dom'
@@ -173,7 +181,7 @@ const handleChange = (e) =>{
       const data = await res.json()
       
         if(!res.ok){
-        dispatch(updateFalier(data.message))
+        dispatch(updateFailure(data.message))
         setUpdateUserError(data.message)
       }
       
@@ -199,7 +207,7 @@ const handleChange = (e) =>{
      setShowmodel(false)
 
      try{
-     dispatch(deletUserStart())
+     dispatch(deleteUserStart())
      
      const res = await fetch(`http://localhost:5000/api/user/delete/${currentUser._id}`,{
       method:"DELETE",
@@ -207,14 +215,14 @@ const handleChange = (e) =>{
      })
       const data =await res.json() 
       if(!res.ok){
-      dispatch( deleteFalier(error.message))
+      dispatch( deleteUserFailure(error.message))
       }
     else{
-      dispatch(deleteSuccess(data))
+      dispatch(deleteUserSuccess(data))
     }
     }
      catch(error){
-      dispatch( deleteFalier(error.message))
+      dispatch( deleteUserFailure(error.message))
      }
     
     }
@@ -235,7 +243,7 @@ const handleChange = (e) =>{
     }
   
   else{
-   dispatch(signoutSuccses())
+   dispatch(signoutSuccess())
   }
      
   

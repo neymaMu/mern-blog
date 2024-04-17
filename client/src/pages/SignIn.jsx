@@ -2,88 +2,91 @@ import React, { useState } from 'react'
 import gym from '../assets/gym.jpg'
 import { Link,useNavigate } from 'react-router-dom'
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react'
-import { signInStart,signInSuccess,signInFailure } from '../redux/user/userSlice'
-
-import {  useDispatch,useSelector } from 'react-redux'
-
 import OAuth from '../componets/OAuth'
-
+import { useDispatch, } from 'react-redux';
+import {signInSuccess,} from '../redux/user/userSlice';
 
 
 
 export default function SignIn() {
  
- 
-  const[formData,setFormData] = useState({})
+  
+     const[formData,setFormData] = useState({})
     
-
-   
-  const navigate = useNavigate()
-  
-   const dispatch = useDispatch()
-  
-   const{loading,error:errorMessage} = useSelector(state => state.user)
-  
-  
-  
-  
-  
-  const handleChane = (e) =>{
-  setFormData({...formData,[e.target.id] : e.target.value.trim()})
-
- }
-
-
-  const handleSubmit = async(e) => {
- 
-   e.preventDefault()
-
-  
-  if( !formData.email || !formData.password){
-   return dispatch(signInFailure("please fill all the fields"))
-  }
-  
-   try{
-    
-     dispatch(signInStart())
-   const res = await fetch("http://localhost:5000/api/auth/signIn",{
-   method:"POST",
-   credentials: 'include',
-   headers:{"Content-Type":"application/json"},
-
-   body:JSON.stringify(formData)
-
-   });
-
-       const data = await res.json()
-       if(data.success === false){
-         dispatch(signInFailure(data.message))
-        }
-       
-       
+     const[errorMessage,setErrorMessage] = useState(false)
+     
+     const[loading,setLoading] = useState(false)
       
+     const navigate = useNavigate()
+     
+     const dispatch = useDispatch();
+     
+     const handleChane = (e) =>{
+     setFormData({...formData,[e.target.id] : e.target.value.trim()})
+   
+    }
+ 
 
+     const handleSubmit = async(e) => {
+    
+      e.preventDefault()
+   
+     
+     if( !formData.email || !formData.password){
+      return setErrorMessage("please fill all the field")
+     }
+     
+      try{
+       
+        setLoading(true)
+        setErrorMessage(false)
+      const res = await fetch("http://localhost:5000/api/auth/signin",{
+      method:"POST",
+      credentials: 'include',
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(formData)
+  
+      });
+  
+          const data = await res.json()
+          if(data.success === false){
+            return setErrorMessage(data.message)
+           }
+          
+          
+            setLoading(false)
+            setErrorMessage(true)
+   
+           if(res.ok){
+           
         if(res.ok){
         
-        dispatch(signInSuccess(data))
-          navigate("/")
-        }
+          dispatch(signInSuccess(data))
+            navigate("/")
+          }
+  
+           }
+   
+   
+          }catch(error){
+ 
+    setLoading(false)
+    setErrorMessage(false)
+   
+   }
+  }
+    
 
 
-       }catch(error){
-      dispatch(signInFailure(error))
 
-
-}
-}
+   
+   
+   
+   
+    return (
+  
+  
  
- 
- 
- 
- 
- 
- 
-  return (
     <div className='min-h-screen mt-20 '>
  
    
@@ -116,9 +119,10 @@ export default function SignIn() {
 
    
    {
-    errorMessage && <Alert className='flex items-center justify-center ' color="failure">{errorMessage}</Alert>
+    errorMessage ? <Alert className='flex items-center justify-center ' color="failure">{errorMessage}</Alert>:null
   }
   
+   
    
    
   
@@ -141,7 +145,7 @@ export default function SignIn() {
   
   
   <Button gradientDuoTone="purpleToPink" type="submit" disabled={loading}>
-   {loading ? <> <Spinner /> <span className='pl-3'>Loading</span></> : 'Sign in' }
+   {loading ? <> <Spinner /> <span className='pl-3'>Loading</span></> : 'SignUp' }
    
    
    
@@ -149,17 +153,17 @@ export default function SignIn() {
   
   </Button>
   
-  
-  <OAuth/>
-  
-  
+   
+   <OAuth/>
+   
+   
    </form>
   
   
   <div className='mt-5 flex gap-3 text-sm'>
-   <span>Dont Have Account?</span>
-   <Link to="/signup" className='text-blue-700 font-bold'>
-   Sign Up
+   <span>Have an Account?</span>
+   <Link to="/signin" className='text-blue-700 font-bold'>
+   Sign In
    </Link>
   
   

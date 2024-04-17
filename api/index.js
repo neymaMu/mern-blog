@@ -13,16 +13,13 @@ import postRoute from './routes/post.js'
 dotenv.config()
 
 const app = express() 
+app.use(cors({origin:"http://localhost:5173",credentials:true}))
 app.use(express.json())
 app.use(cookieParser());
 
-app.use(cors({origin:"http://localhost:5173",credentials:true}))
 
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
- })
+
+
 mongoose.connect(process.env.MONG_DB)
 .then(() => console.log("Db Connected"))
 .catch((error) => console.log(error))
