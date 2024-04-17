@@ -143,7 +143,7 @@ export default function PostPage() {
 
                 {recentpost && 
                 
-              recentpost.map((post) => <PostCard key={post._id} post={post}/>)}
+              recentpost.map((pos) => <PostCard key={pos._id} pos={pos}/>)}
               </div>
               
               

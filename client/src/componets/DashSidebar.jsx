@@ -8,7 +8,7 @@ import {  useDispatch} from 'react-redux'
 import { MdOutlinePostAdd } from "react-icons/md";
 import{useSelector} from 'react-redux'
 import { FaUsers } from "react-icons/fa";
-
+import { FaRegComment } from "react-icons/fa";
 
 export default function DashSidebar() {
  
@@ -93,7 +93,20 @@ export default function DashSidebar() {
        </Link> }
       
    
-   
+       {currentUser.isAdmin && <Link to="/dashbord?tab=coment">
+       <Sidebar.Item active={tab === 'coment'} as="div" icon={FaRegComment }>
+       Coment
+       </Sidebar.Item>
+       
+       
+       </Link> }
+      
+      
+      
+      
+      
+      
+      
        {currentUser.isAdmin && <Link to="/dashbord?tab=users">
        <Sidebar.Item active={tab === 'users'} as="div" 
        icon={FaUsers }>

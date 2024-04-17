@@ -4,6 +4,7 @@ import DashSidebar from '../componets/DashSidebar'
 import DashProfile from '../componets/DashProfile'
 import DashPosts from '../componets/DashPosts'
 import DashUser from '../componets/DashUser'
+import Dashcoment from '../componets/Dashcoment'
 
 
 
@@ -49,6 +50,8 @@ export default function Dashborad() {
      {tab === 'posts' && <DashPosts/>}
 
      {tab === 'users' && <DashUser/>}
+
+     {tab === 'coment' && <Dashcoment/>}
    
     </div>
     
