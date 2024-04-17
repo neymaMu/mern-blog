@@ -40,8 +40,10 @@ export default function SignIn() {
         setLoading(true)
         setErrorMessage(false)
       const res = await fetch("http://localhost:5000/api/auth/signIn",{
+    
+    
       method:"POST",
-      credentials: 'include',
+   
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify(formData)
   
@@ -162,7 +164,7 @@ export default function SignIn() {
   <div className='mt-5 flex gap-3 text-sm'>
    <span> Dont Have an Account?</span>
    <Link to="/signup" className='text-blue-700 font-bold'>
-   Sign In
+   Sign up
    </Link>
   
   
