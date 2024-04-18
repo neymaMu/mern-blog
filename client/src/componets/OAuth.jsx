@@ -29,7 +29,7 @@ try{
 
 console.log(resultfromgoogle)
  const res = await fetch('https://mern-blog-kdbu.onrender.com/api/auth/google',{
- 
+  credentials: 'include',
  method:"POST",
  
   headers:{'Content-Type' : 'application/json'},
