@@ -65,7 +65,7 @@ export default function ComentSection({postId}) {
 
   const res = await fetch(`http://localhost:5000/api/coment/getcoment/${postId}`,{
    
-    
+ 
  
   })
     if(res.ok){
@@ -94,7 +94,7 @@ export default function ComentSection({postId}) {
       return;
     }
     const res = await fetch(`http://localhost:5000/api/coment/likecoment/${commentId}`,{
-      credentials: "include", 
+     
     method:"PUT",
   },
   );

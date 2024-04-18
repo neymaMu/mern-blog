@@ -15,15 +15,12 @@ dotenv.config()
 const app = express() 
 
 app.use(express.json())
-
+app.use(cors({origin:"https://mern-blog-kdbu.onrender.com",credentials:true}))
 app.use(cookieParser())
 
 
 
-app.use(cors({
-  credentials: true,
-  origin: "https://mern-blog-kdbu.onrender.com"
-}));
+
 
 
   mongoose.connect(process.env.MONG_DB)
