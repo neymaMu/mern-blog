@@ -3,7 +3,7 @@ import{useSelector} from 'react-redux'
 import { Link } from 'react-router-dom'
 import{Alert, Button, Textarea,Modal} from 'flowbite-react'
 import ComentPage from './ComentPage'
-import { FaCircleExclamation } from "react-icons/fa6";
+import { FaCircleExclamation, FaHouseMedicalCircleExclamation } from "react-icons/fa6";
 import {  useNavigate } from 'react-router-dom';
 import axios from 'axios'
 export default function ComentSection({postId}) {
@@ -80,6 +80,13 @@ export default function ComentSection({postId}) {
  }
  
 
+
+ 
+ 
+ 
+ 
+ 
+ 
  const handleLike = async (commentId) => {
   try {
     if (!currentUser) {
@@ -89,10 +96,15 @@ export default function ComentSection({postId}) {
     const res = await fetch(`http://localhost:5000/api/coment/likecoment/${commentId}`,{
       credentials: "include",
     method:"PUT",
-   
-    }
+   }
   
   );
+
+  if (!res.ok) {
+   console.log('Bad fetch response')
+  }
+
+
     if (res.ok) {
       const data = await res.json();
  setComments(comments.map((comment) => comment._id === commentId ? {...comment,likes: data.likes,numberOflikes: data.likes.length,}
