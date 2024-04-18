@@ -16,7 +16,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cors({origin:["http://localhost:5173","https://mern-blog-kdbu.onrender.com"],credentials:true}))
-app.use(cookieParser());
+app.use(cookieParser())
 
 const origin =
   process.env.NODE_ENV === "production"
