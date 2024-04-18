@@ -18,13 +18,15 @@ app.use(express.json())
 app.use(cors({origin:"http://localhost:5173",credentials:true}))
 app.use(cookieParser());
 
-app.use(function (request, response, next) {
-    response.header("Access-Control-Allow-Origin", "*");
-    response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+app.use((req, res, next) => {
+    if (req.method === "OPTIONS") {
+      res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+      return res.status(200).json({});
+    }
     next();
   });
 
-
+ 
 //app.use(function(req, res, next) {
     //res.header("Access-Control-Allow-Origin", req.header('Origin'));
     //res.header("Access-Control-Allow-Credentials", true);
