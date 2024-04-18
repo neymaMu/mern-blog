@@ -64,7 +64,7 @@ export default function ComentSection({postId}) {
   try{
 
   const res = await fetch(`http://localhost:5000/api/coment/getcoment/${postId}`,{
-    
+    credentials: "include",
     
  
   })
