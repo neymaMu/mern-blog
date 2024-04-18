@@ -31,8 +31,10 @@ export default function ComentSection({postId}) {
       method:"POST",
      
         headers:{
-          "Content-Type" : "application/json"
+          "Content-Type" : "application/json",
+          'x-auth-token': "JWT_SECRET",
         },
+       
         body:JSON.stringify({content:comment,postId,userId:currentUser._id})
        })
       
