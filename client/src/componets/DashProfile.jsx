@@ -167,10 +167,10 @@ const handleChange = (e) =>{
   }
     try{
      dispatch(updateStart())
-     const res = await fetch(`http://localhost:5000/api/user/update/${currentUser._id}`,{
-    
+     const res = await fetch(`https://mern-blog-kdbu.onrender.com/api/user/update/${currentUser._id}`,{
+      credentials: 'include',
      method:"PUT",
-     credentials: 'include',
+     
      headers:{
       'Content-Type': 'application/json',
      },
