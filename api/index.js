@@ -15,24 +15,10 @@ dotenv.config()
 const app = express() 
 
 app.use(express.json())
-app.use(cors({origin:["http://localhost:5173","https://mern-blog-kdbu.onrender.com"],credentials:true}))
+app.use(cors())
 app.use(cookieParser())
 
-const origin =
-  process.env.NODE_ENV === "production"
-    ? process.env.FRONTEND_PROD_URL
-    : process.env.FRONTEND_LOCAL_URL; 
 
-    app.use((req, res, next) => {
-        res.header("Access-Control-Allow-Origin", origin);
-        res.header("Access-Control-Allow-Credentials", true);
-      
-        if (req.method === "OPTIONS") {
-          res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
-          return res.status(200).json({});
-        }
-        next();
-      });
 
  
 //app.use(function(req, res, next) {

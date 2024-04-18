@@ -64,7 +64,7 @@ export default function ComentSection({postId}) {
   try{
 
   const res = await fetch(`http://localhost:5000/api/coment/getcoment/${postId}`,{
-    credentials: "include",
+   
     
  
   })
@@ -84,7 +84,7 @@ export default function ComentSection({postId}) {
  
  
  
- 
+
  
  
  const handleLike = async (commentId) => {
@@ -94,10 +94,13 @@ export default function ComentSection({postId}) {
       return;
     }
     const res = await fetch(`http://localhost:5000/api/coment/likecoment/${commentId}`,{
-      credentials: "include",
+     
     method:"PUT",
-   }
-  
+    headers:{
+      'mode':'cors'
+   },
+ 
+  },
   );
 
   if (!res.ok) {
