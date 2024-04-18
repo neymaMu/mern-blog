@@ -84,8 +84,8 @@ import{useSelector} from 'react-redux'
 
 
        try{
-         const res = await fetch(`http://localhost:5000/api/post/updatedpost/${postId}/${currentUser._id}`,{
-
+         const res = await fetch(`https://mern-blog-kdbu.onrender.com/api/post/updatedpost/${postId}/${currentUser._id}`,{
+          credentials: 'include',
           method:"PUT",
       
           headers:{
@@ -128,7 +128,9 @@ import{useSelector} from 'react-redux'
    const fetchEditPost = async () => {
 
     try{
-     const res = await fetch(`http://localhost:5000/api/post/getposts?postId=${postId}`)
+     const res = await fetch(`https://mern-blog-kdbu.onrender.com/api/post/getposts?postId=${postId}`,{
+      credentials: 'include',
+     })
      const data = await res.json();
     
     

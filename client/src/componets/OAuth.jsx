@@ -28,8 +28,9 @@ try{
  const resultfromgoogle = await signInWithPopup(auth,provider)
 
 console.log(resultfromgoogle)
- const res = await fetch('http://localhost:5000/api/auth/google',{
-  method:"POST",
+ const res = await fetch('https://mern-blog-kdbu.onrender.com/api/auth/google',{
+  credentials: "include",
+ method:"POST",
  
   headers:{'Content-Type' : 'application/json'},
    body:JSON.stringify({
