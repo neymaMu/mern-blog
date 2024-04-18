@@ -5,7 +5,7 @@ import{Alert, Button, Textarea,Modal} from 'flowbite-react'
 import ComentPage from './ComentPage'
 import { FaCircleExclamation } from "react-icons/fa6";
 import {  useNavigate } from 'react-router-dom';
-
+import axios from 'axios'
 export default function ComentSection({postId}) {
  
    const[comment,setComment] = useState('')
@@ -27,8 +27,9 @@ export default function ComentSection({postId}) {
       
      try{
       const res = await fetch(`http://localhost:5000/api/coment/create`,{
-        method:"POST",
-      
+        credentials: "include",
+      method:"POST",
+     
         headers:{
           "Content-Type" : "application/json"
         },
@@ -62,7 +63,11 @@ export default function ComentSection({postId}) {
 
   try{
 
-  const res = await fetch(`http://localhost:5000/api/coment/getcoment/${postId}`)
+  const res = await fetch(`http://localhost:5000/api/coment/getcoment/${postId}`,{
+    
+    
+ 
+  })
     if(res.ok){
     const data = await res.json()
     setComments(data)
@@ -81,10 +86,12 @@ export default function ComentSection({postId}) {
       navigate('/signin');
       return;
     }
-    const res = await fetch(`http://localhost:5000/api/coment/likecoment/${commentId}`, {
-      method: 'PUT',
-   
-    });
+    const res = await fetch(`http://localhost:5000/api/coment/likecoment/${commentId}`,{
+      credentials: "include",
+    method:"PUT"
+    }
+  
+  );
     if (res.ok) {
       const data = await res.json();
  setComments(comments.map((comment) => comment._id === commentId ? {...comment,likes: data.likes,numberOflikes: data.likes.length,}
@@ -117,8 +124,9 @@ export default function ComentSection({postId}) {
 
 
 const res = await fetch(`http://localhost:5000/api/coment/deletecoment/${commentId}`,{
-  method:"DELETE",
-
+  credentials: "include",
+method:"DELETE",
+ 
   headers:{
     "Content-Type" : "application/json"
   },

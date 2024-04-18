@@ -27,7 +27,9 @@ export default function DashUser() {
      const  featchusers = async() => {
 
         try{
-      const res = await fetch("http://localhost:5000/api/user/getuser")
+      const res = await fetch("http://localhost:5000/api/user/getuser",{
+        credentials: "include",
+      })
         
 
      const data = await res.json()
@@ -57,7 +59,9 @@ export default function DashUser() {
 
         try{
 
-     const res = await fetch(`http://localhost:5000/api/user/getuser?startIndex=${startIndex}`)
+     const res = await fetch(`http://localhost:5000/api/user/getuser?startIndex=${startIndex}`,{
+      credentials: "include",
+     })
 
      const data = await res.json();
      if (res.ok) {
@@ -87,7 +91,8 @@ export default function DashUser() {
   try{
   
     const res = await fetch(`http://localhost:5000/api/user/delete/${postIdToDelete}`,{
-      method:"DELETE",
+      credentials: "include",
+    method:"DELETE",
  
     })
 

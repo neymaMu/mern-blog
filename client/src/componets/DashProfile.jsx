@@ -210,8 +210,9 @@ const handleChange = (e) =>{
      dispatch(deleteUserStart())
      
      const res = await fetch(`http://localhost:5000/api/user/delete/${currentUser._id}`,{
-      method:"DELETE",
       credentials: 'include',
+     method:"DELETE",
+    
      })
       const data =await res.json() 
       if(!res.ok){
