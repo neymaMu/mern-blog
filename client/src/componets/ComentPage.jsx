@@ -57,10 +57,11 @@ getUsers()
 
   try{
   const res = await fetch(`http://localhost:5000/api/coment/editcoment/${comen._id}`,{
-    credentials: "include",
+  
   method:"PUT",
   
     headers:{
+     
       "Content-Type" : "application/json"
     },
     body:JSON.stringify({

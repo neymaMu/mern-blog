@@ -88,7 +88,8 @@ export default function ComentSection({postId}) {
     }
     const res = await fetch(`http://localhost:5000/api/coment/likecoment/${commentId}`,{
       credentials: "include",
-    method:"PUT"
+    method:"PUT",
+   
     }
   
   );
