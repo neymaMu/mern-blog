@@ -26,7 +26,7 @@ export default function ComentSection({postId}) {
      }
       
      try{
-      const res = await fetch(`http://localhost:5000/api/coment/create`,{
+      const res = await fetch(`https://mern-blog-kdbu.onrender.com:5000/api/coment/create`,{
         credentials: "include",
       method:"POST",
      
