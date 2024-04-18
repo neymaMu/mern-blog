@@ -65,7 +65,7 @@ export default function ComentSection({postId}) {
 
   try{
 
-  const res = await fetch(`http://localhost:5000/api/coment/getcoment/${postId}`,{
+  const res = await fetch(`https://mern-blog-kdbu.onrender.com/api/coment/getcoment/${postId}`,{
    
  
  
@@ -95,8 +95,8 @@ export default function ComentSection({postId}) {
       navigate('/signin');
       return;
     }
-    const res = await fetch(`http://localhost:5000/api/coment/likecoment/${commentId}`,{
-     
+    const res = await fetch(`https://mern-blog-kdbu.onrender.com/api/coment/likecoment/${commentId}`,{
+      credentials: "include",
     method:"PUT",
   },
   );
@@ -137,7 +137,7 @@ export default function ComentSection({postId}) {
 
 
 
-const res = await fetch(`http://localhost:5000/api/coment/deletecoment/${commentId}`,{
+const res = await fetch(`https://mern-blog-kdbu.onrender.com/api/coment/deletecoment/${commentId}`,{
   credentials: "include",
 method:"DELETE",
  

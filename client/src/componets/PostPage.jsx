@@ -60,7 +60,7 @@ export default function PostPage() {
    useEffect(() => {
     try {
       const fetchRecentPosts = async () => {
-        const res = await fetch(`http://localhost:5000/api/post/getposts?limit=3`);
+        const res = await fetch(`https://mern-blog-kdbu.onrender.com/api/post/getposts?limit=3`);
         const data = await res.json();
         if (res.ok) {
           setRecentpost(data.posts);

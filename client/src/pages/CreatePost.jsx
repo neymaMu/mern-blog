@@ -78,7 +78,7 @@ import{useNavigate} from 'react-router-dom'
 
 
        try{
-         const res = await fetch("http://localhost:5000/api/post/create",{
+         const res = await fetch("https://mern-blog-kdbu.onrender.com/api/post/create",{
 
           method:"POST",
      

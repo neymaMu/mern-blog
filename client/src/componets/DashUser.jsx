@@ -90,7 +90,7 @@ export default function DashUser() {
 
   try{
   
-    const res = await fetch(`http://localhost:5000/api/user/delete/${postIdToDelete}`,{
+    const res = await fetch(`https://mern-blog-kdbu.onrender.com/api/user/delete/${postIdToDelete}`,{
       credentials: "include",
     method:"DELETE",
  

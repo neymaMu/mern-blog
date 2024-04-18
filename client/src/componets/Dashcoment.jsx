@@ -13,7 +13,7 @@ export default function DashComments() {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/coment/getcomments`);
+        const res = await fetch(`https://mern-blog-kdbu.onrender.com/api/coment/getcomments`);
      
         if (res.ok) {
           const data = await res.json();
@@ -35,7 +35,7 @@ export default function DashComments() {
     const startIndex = comments.length;
     try {
       const res = await fetch(
-        `http://localhost:5000/api/coment/getcomments?startIndex=${startIndex}`
+        `https://mern-blog-kdbu.onrender.com/api/coment/getcomments?startIndex=${startIndex}`
       );
       const data = await res.json();
       if (res.ok) {
@@ -48,14 +48,14 @@ export default function DashComments() {
       console.log(error.message);
     }
   };
-
+ 
   const handleDeleteComment = async () => {
     setShowModal(false);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/coment/deletecoment/${commentIdToDelete}`,
-        { 
-           
+        `https://mern-blog-kdbu.onrender.com/api/coment/deletecoment/${commentIdToDelete}`,
+        {  
+          credentials: "include",
           method: 'DELETE',
         }
       );

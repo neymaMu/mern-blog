@@ -20,10 +20,13 @@ export default function DashPosts() {
      useEffect(() => {
      
     const fetchposts = async() => {
-
+     
+    
        try{
 
-        const res = await fetch(`http://localhost:5000/api/post/getposts?userId=${currentUser._id}`)
+        const res = await fetch(` https://mern-blog-kdbu.onrender.com/api/post/getposts?userId=${currentUser._id}`,{
+          credentials: "include",
+        })
 
          const data = await res.json()
         if(res.ok){
@@ -54,7 +57,7 @@ export default function DashPosts() {
     const startIndex = userPosts.length;
     try {
       const res = await fetch(
-        `http://localhost:5000/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`
+        `https://mern-blog-kdbu.onrender.com/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`
       );
       const data = await res.json();
       if (res.ok) {
@@ -74,8 +77,8 @@ export default function DashPosts() {
     setShowModel(false);
   try{
 
-  const res = await fetch(`http://localhost:5000/api/post/deletpost/${postIdToDelete}/${currentUser._id}`,{
- 
+  const res = await fetch(`https://mern-blog-kdbu.onrender.com/api/post/deletpost/${postIdToDelete}/${currentUser._id}`,{
+    credentials: "include",
   method:"DELETE"
   
 
